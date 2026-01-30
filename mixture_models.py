@@ -141,10 +141,21 @@ class UMM(nn.Module):
 
         Returns:
             torch.Tensor: Log-likelihood of shape (n_samples,).
+            We will treat points outside the uniform box as having a very small likelihood -1e^6
         """
-        #### YOUR CODE GOES HERE ####
-        
-    
+        probabilities = nn.functional.log_softmax(self.weights, dim=0)  # (n_components,)
+        in_box_prob = -self.log_sizes.sum(dim=1)  # (n_components,)
+        out_box_prob = -1e6  # Scalar for points outside the box
+        X_expanded = X.unsqueeze(1)  # (n_samples, 1, 2)
+        centers_expanded = self.centers.unsqueeze(0) # (1, n_components,2)
+        sizes = torch.exp(self.log_sizes).unsqueeze(0)  # (1, n_components, 2)
+        lower_bounds = centers_expanded - sizes / 2  # (1, n_components, 2)
+        upper_bounds = centers_expanded + sizes / 2  # (1, n_components, 2)
+        in_box = ((X_expanded >= lower_bounds) & (X_expanded <= upper_bounds)).all(dim=2)  # (n_samples, n_components)
+        log_likelihood_components = torch.where(in_box, in_box_prob.unsqueeze(0),
+                                                out_box_prob)  # (n_samples, n_components)
+        log_likelihood = torch.logsumexp(probabilities.unsqueeze(0) + log_likelihood_components, dim=1)  # (n_samples,)
+        return log_likelihood    
     
     def loss_function(self, log_likelihood):
         """
@@ -155,7 +166,7 @@ class UMM(nn.Module):
         Returns:
             torch.Tensor: Negative log-likelihood.
         """
-        #### YOUR CODE GOES HERE ####
+        return -torch.mean(log_likelihood)
 
 
     def sample(self, n_samples):
@@ -167,7 +178,11 @@ class UMM(nn.Module):
         Returns:
             torch.Tensor: Generated samples of shape (n_samples, 2).
         """
-        #### YOUR CODE GOES HERE ####
+        K_for_sample_i = torch.multinomial(nn.functional.softmax(self.weights, dim=0), n_samples, replacement=True) # (n_samples,)
+        centers_selected = self.centers[K_for_sample_i]  # (n_samples, 2)
+        sizes_selected = torch.exp(self.log_sizes)[K_for_sample_i]  # (n_samples, 2)
+        uniform_samples = torch.rand(n_samples, 2) * sizes_selected - (sizes_selected / 2) + centers_selected
+        return uniform_samples
 
     def conditional_sample(self, n_samples, label):
         """
@@ -179,7 +194,10 @@ class UMM(nn.Module):
         Returns:
             torch.Tensor: Generated samples of shape (n_samples, 2).
         """
-        #### YOUR CODE GOES HERE ####
+        centers_selected = self.centers[label].unsqueeze(0).expand(n_samples, -1) 
+        sizes_selected = torch.exp(self.log_sizes)[label].unsqueeze(0).expand(n_samples, -1)
+        uniform_samples = torch.rand(n_samples, 2) * sizes_selected - (sizes_selected / 2) + centers_selected
+        return uniform_samples
 
 
 def train_and_plot_gmm_umm (train_dataset, test_dataset, num_epochs=50, learning_rate = 0.01, Model_type = type(GMM)) :
@@ -275,7 +293,10 @@ def train_and_plot_gmm_umm (train_dataset, test_dataset, num_epochs=50, learning
         if is_last_model:
             # Initialize the means to the means of each country from the train dataset
             with torch.no_grad():
-                model.means.copy_(get_means_of_countries_from_train_dataset(train_dataset))
+                if isinstance(model, GMM):
+                    model.means.copy_(get_means_of_countries_from_train_dataset(train_dataset))
+                elif isinstance(model, UMM):
+                    model.centers.copy_(get_means_of_countries_from_train_dataset(train_dataset))
 
         optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
@@ -345,7 +366,7 @@ if __name__ == "__main__":
 
     num_epochs = 50
     learning_rate_for_GMM = 0.01
-    learning_rate_for_UMM = 0.001
+    learning_rate_for_UMM = 0.0001
 
     # Normalize the datasets
     train_dataset.features = normalize_tensor(train_dataset.features, d=0)

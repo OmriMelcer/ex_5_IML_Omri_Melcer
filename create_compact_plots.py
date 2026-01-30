@@ -70,9 +70,78 @@ def create_country_init_epochs_plot():
     print("Created: plots/GMM_k33_country_init_epochs.png")
 
 
+def create_umm_k_comparison_plot():
+    """Combine k=1, k=5, k=10 final plots into one figure for UMM"""
+    fig = plt.figure(figsize=(14, 18))
+
+    plot_files = [
+        ('plots/UMM_k1_final_random_init.png', 'k=1'),
+        ('plots/UMM_k5_final_random_init.png', 'k=5'),
+        ('plots/UMM_k10_final_random_init.png', 'k=10')
+    ]
+
+    for idx, (filename, title) in enumerate(plot_files, 1):
+        ax = fig.add_subplot(3, 1, idx)
+        img = mpimg.imread(filename)
+        ax.imshow(img)
+        ax.axis('off')
+        ax.set_title(title, fontsize=16, fontweight='bold')
+
+    fig.suptitle('UMM Models Comparison - Different Number of Components', fontsize=18, fontweight='bold', y=0.99)
+    plt.tight_layout()
+    plt.savefig('plots/UMM_k_comparison.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Created: plots/UMM_k_comparison.png")
+
+
+def create_umm_random_init_epochs_plot():
+    """Combine k=33 random init epoch plots into one figure for UMM"""
+    fig = plt.figure(figsize=(20, 12))
+
+    epochs = [1, 11, 21, 31, 41, 50]
+
+    for idx, epoch in enumerate(epochs, 1):
+        filename = f'plots/UMM_k33_epoch{epoch}_random_init.png'
+        ax = fig.add_subplot(2, 3, idx)
+        img = mpimg.imread(filename)
+        ax.imshow(img)
+        ax.axis('off')
+        ax.set_title(f'Epoch {epoch}', fontsize=14, fontweight='bold')
+
+    fig.suptitle('UMM k=33 Training Progress - Random Initialization', fontsize=18, fontweight='bold', y=0.99)
+    plt.tight_layout()
+    plt.savefig('plots/UMM_k33_random_init_epochs.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Created: plots/UMM_k33_random_init_epochs.png")
+
+
+def create_umm_country_init_epochs_plot():
+    """Combine k=33 country init epoch plots into one figure for UMM"""
+    fig = plt.figure(figsize=(20, 12))
+
+    epochs = [1, 11, 21, 31, 41, 50]
+
+    for idx, epoch in enumerate(epochs, 1):
+        filename = f'plots/UMM_k33_epoch{epoch}_country_init.png'
+        ax = fig.add_subplot(2, 3, idx)
+        img = mpimg.imread(filename)
+        ax.imshow(img)
+        ax.axis('off')
+        ax.set_title(f'Epoch {epoch}', fontsize=14, fontweight='bold')
+
+    fig.suptitle('UMM k=33 Training Progress - Country Initialization', fontsize=18, fontweight='bold', y=0.99)
+    plt.tight_layout()
+    plt.savefig('plots/UMM_k33_country_init_epochs.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Created: plots/UMM_k33_country_init_epochs.png")
+
+
 if __name__ == "__main__":
     print("Creating compact plots...")
-    create_k_comparison_plot()
-    create_random_init_epochs_plot()
-    create_country_init_epochs_plot()
-    print("\nDone! Created 3 compact plots.")
+    # create_k_comparison_plot()
+    # create_random_init_epochs_plot()
+    # create_country_init_epochs_plot()
+    create_umm_k_comparison_plot()
+    create_umm_random_init_epochs_plot()
+    create_umm_country_init_epochs_plot()
+    print("\nDone! Created 3 UMM compact plots.")

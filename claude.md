@@ -78,6 +78,7 @@ ex_5_IML/
 - **Seeding:** `np.random.seed(42)` and `torch.manual_seed(42)` (reproducibility matters, exact seed value flexible)
 - **Data normalization:** Normalize Europe data to zero mean, unit variance per dimension
 - **Default parameters:** Always use the defaults provided in the skeleton code unless told otherwise
+- **Running scripts:** Use `uv run file.py` to execute Python files (uv manages the project environment)
 
 ## Report Requirements
 

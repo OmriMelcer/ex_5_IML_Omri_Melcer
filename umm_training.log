@@ -1,0 +1,302 @@
+warning: `VIRTUAL_ENV=/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+Uninstalled 1 package in 1.30s
+Installed 1 package in 234ms
+/Users/omrimelcer/Documents/university/2026_fall/IML/ex_5_IML/dataset.py:18: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:219.)
+  self.labels = torch.from_numpy(self.data_frame.iloc[:, 3].values).long()
+
+======================================================================
+TRAINING UMM MODELS
+======================================================================
+
+============================================================
+Training UMM with 1 components (random_init)
+============================================================
+Epoch [1/50], Loss: 830693.5231
+Epoch [2/50], Loss: 840301.5856
+Epoch [3/50], Loss: 845897.4282
+Epoch [4/50], Loss: 852969.7824
+Epoch [5/50], Loss: 856885.6875
+Epoch [6/50], Loss: 863626.7106
+Epoch [7/50], Loss: 868777.5625
+Epoch [8/50], Loss: 872870.4444
+Epoch [9/50], Loss: 878557.3889
+Epoch [10/50], Loss: 883087.5602
+Epoch [11/50], Loss: 888056.2755
+Epoch [12/50], Loss: 893200.6875
+Epoch [13/50], Loss: 897452.4769
+Epoch [14/50], Loss: 901478.2153
+Epoch [15/50], Loss: 904895.5463
+Epoch [16/50], Loss: 908916.7569
+Epoch [17/50], Loss: 912604.7176
+Epoch [18/50], Loss: 915816.6366
+Epoch [19/50], Loss: 918653.9722
+Epoch [20/50], Loss: 920366.8102
+Epoch [21/50], Loss: 924074.1528
+Epoch [22/50], Loss: 926122.8611
+Epoch [23/50], Loss: 928678.5880
+Epoch [24/50], Loss: 930859.7176
+Epoch [25/50], Loss: 933214.5718
+Epoch [26/50], Loss: 935050.1528
+Epoch [27/50], Loss: 936798.5394
+Epoch [28/50], Loss: 939349.7454
+Epoch [29/50], Loss: 940241.6991
+Epoch [30/50], Loss: 942810.9954
+Epoch [31/50], Loss: 944804.1620
+Epoch [32/50], Loss: 946210.8912
+Epoch [33/50], Loss: 948025.1505
+Epoch [34/50], Loss: 948975.8727
+Epoch [35/50], Loss: 950252.1088
+Epoch [36/50], Loss: 951477.9884
+Epoch [37/50], Loss: 953283.8634
+Epoch [38/50], Loss: 953923.2616
+Epoch [39/50], Loss: 954767.4213
+Epoch [40/50], Loss: 956906.5718
+Epoch [41/50], Loss: 957558.9028
+Epoch [42/50], Loss: 957488.4676
+Epoch [43/50], Loss: 959462.9352
+Epoch [44/50], Loss: 960948.4606
+Epoch [45/50], Loss: 961629.8519
+Epoch [46/50], Loss: 962787.9097
+Epoch [47/50], Loss: 963646.9236
+Epoch [48/50], Loss: 964257.9213
+Epoch [49/50], Loss: 964638.9676
+Epoch [50/50], Loss: 965846.1343
+Saved plot: plots/UMM_k1_final_random_init.png
+Test Loss for 1 components: 966624.2500
+
+============================================================
+Training UMM with 5 components (random_init)
+============================================================
+Epoch [1/50], Loss: 468632.4919
+Epoch [2/50], Loss: 482381.7859
+Epoch [3/50], Loss: 502108.0833
+Epoch [4/50], Loss: 519888.3449
+Epoch [5/50], Loss: 536758.5370
+Epoch [6/50], Loss: 551377.8287
+Epoch [7/50], Loss: 569036.0255
+Epoch [8/50], Loss: 583244.5509
+Epoch [9/50], Loss: 600812.9815
+Epoch [10/50], Loss: 615103.5486
+Epoch [11/50], Loss: 628887.7685
+Epoch [12/50], Loss: 641735.4699
+Epoch [13/50], Loss: 655316.2685
+Epoch [14/50], Loss: 667102.1690
+Epoch [15/50], Loss: 676167.6157
+Epoch [16/50], Loss: 687530.4838
+Epoch [17/50], Loss: 697138.4861
+Epoch [18/50], Loss: 707225.1065
+Epoch [19/50], Loss: 716092.9306
+Epoch [20/50], Loss: 725866.9329
+Epoch [21/50], Loss: 734537.1458
+Epoch [22/50], Loss: 742307.6296
+Epoch [23/50], Loss: 751380.8796
+Epoch [24/50], Loss: 758679.8912
+Epoch [25/50], Loss: 766115.1806
+Epoch [26/50], Loss: 772364.6458
+Epoch [27/50], Loss: 779502.1736
+Epoch [28/50], Loss: 786287.0856
+Epoch [29/50], Loss: 792854.3333
+Epoch [30/50], Loss: 799868.5347
+Epoch [31/50], Loss: 806132.8565
+Epoch [32/50], Loss: 812742.0995
+Epoch [33/50], Loss: 817858.0648
+Epoch [34/50], Loss: 823171.6806
+Epoch [35/50], Loss: 828534.3889
+Epoch [36/50], Loss: 833660.0463
+Epoch [37/50], Loss: 838238.6505
+Epoch [38/50], Loss: 841891.6921
+Epoch [39/50], Loss: 847946.8102
+Epoch [40/50], Loss: 852281.9190
+Epoch [41/50], Loss: 856695.1806
+Epoch [42/50], Loss: 860955.3750
+Epoch [43/50], Loss: 864288.0949
+Epoch [44/50], Loss: 867621.4630
+Epoch [45/50], Loss: 870487.2083
+Epoch [46/50], Loss: 873751.4352
+Epoch [47/50], Loss: 877742.3287
+Epoch [48/50], Loss: 880744.3657
+Epoch [49/50], Loss: 882033.4907
+Epoch [50/50], Loss: 884868.2546
+Saved plot: plots/UMM_k5_final_random_init.png
+Test Loss for 5 components: 884307.4375
+
+============================================================
+Training UMM with 10 components (random_init)
+============================================================
+Epoch [1/50], Loss: 469762.9375
+Epoch [2/50], Loss: 492478.2708
+Epoch [3/50], Loss: 515982.2674
+Epoch [4/50], Loss: 536198.0729
+Epoch [5/50], Loss: 554916.1296
+Epoch [6/50], Loss: 574435.0440
+Epoch [7/50], Loss: 594734.8634
+Epoch [8/50], Loss: 609759.7708
+Epoch [9/50], Loss: 625538.4421
+Epoch [10/50], Loss: 643974.2986
+Epoch [11/50], Loss: 658524.5139
+Epoch [12/50], Loss: 671361.2153
+Epoch [13/50], Loss: 686423.6690
+Epoch [14/50], Loss: 697635.9931
+Epoch [15/50], Loss: 710186.6227
+Epoch [16/50], Loss: 722245.0926
+Epoch [17/50], Loss: 735351.1690
+Epoch [18/50], Loss: 744747.9444
+Epoch [19/50], Loss: 755047.6898
+Epoch [20/50], Loss: 764749.9745
+Epoch [21/50], Loss: 774923.1644
+Epoch [22/50], Loss: 781746.1366
+Epoch [23/50], Loss: 791750.7569
+Epoch [24/50], Loss: 797736.0208
+Epoch [25/50], Loss: 803834.9977
+Epoch [26/50], Loss: 811916.8241
+Epoch [27/50], Loss: 818233.4491
+Epoch [28/50], Loss: 825168.1991
+Epoch [29/50], Loss: 831205.8519
+Epoch [30/50], Loss: 835747.5903
+Epoch [31/50], Loss: 841242.7083
+Epoch [32/50], Loss: 846688.7292
+Epoch [33/50], Loss: 851794.3565
+Epoch [34/50], Loss: 856409.7940
+Epoch [35/50], Loss: 860005.9745
+Epoch [36/50], Loss: 864176.3935
+Epoch [37/50], Loss: 868229.2569
+Epoch [38/50], Loss: 872840.8171
+Epoch [39/50], Loss: 876141.2245
+Epoch [40/50], Loss: 879191.6736
+Epoch [41/50], Loss: 882718.8125
+Epoch [42/50], Loss: 884560.1644
+Epoch [43/50], Loss: 887996.8796
+Epoch [44/50], Loss: 891049.9167
+Epoch [45/50], Loss: 894402.0255
+Epoch [46/50], Loss: 896769.1551
+Epoch [47/50], Loss: 898866.2917
+Epoch [48/50], Loss: 901775.3333
+Epoch [49/50], Loss: 903886.6782
+Epoch [50/50], Loss: 905745.5139
+Saved plot: plots/UMM_k10_final_random_init.png
+Test Loss for 10 components: 906158.7500
+
+============================================================
+Training UMM with 33 components (random_init)
+============================================================
+Epoch [1/50], Loss: 107284.3414
+Saved plot: plots/UMM_k33_epoch1_random_init.png
+Epoch [2/50], Loss: 115594.7960
+Epoch [3/50], Loss: 123325.8709
+Epoch [4/50], Loss: 130641.6554
+Epoch [5/50], Loss: 138125.9971
+Epoch [6/50], Loss: 146175.4838
+Epoch [7/50], Loss: 155428.2459
+Epoch [8/50], Loss: 165902.3582
+Epoch [9/50], Loss: 176762.6985
+Epoch [10/50], Loss: 186725.2419
+Epoch [11/50], Loss: 200306.0179
+Saved plot: plots/UMM_k33_epoch11_random_init.png
+Epoch [12/50], Loss: 214941.4931
+Epoch [13/50], Loss: 229370.2836
+Epoch [14/50], Loss: 241017.9005
+Epoch [15/50], Loss: 256850.8495
+Epoch [16/50], Loss: 270310.8189
+Epoch [17/50], Loss: 285652.2245
+Epoch [18/50], Loss: 302718.1447
+Epoch [19/50], Loss: 318492.9155
+Epoch [20/50], Loss: 335598.8333
+Epoch [21/50], Loss: 351776.6424
+Saved plot: plots/UMM_k33_epoch21_random_init.png
+Epoch [22/50], Loss: 368203.7743
+Epoch [23/50], Loss: 383936.5938
+Epoch [24/50], Loss: 401911.2789
+Epoch [25/50], Loss: 412777.3727
+Epoch [26/50], Loss: 427825.5752
+Epoch [27/50], Loss: 443304.5926
+Epoch [28/50], Loss: 455118.8553
+Epoch [29/50], Loss: 470302.0718
+Epoch [30/50], Loss: 484210.9583
+Epoch [31/50], Loss: 497487.5289
+Saved plot: plots/UMM_k33_epoch31_random_init.png
+Epoch [32/50], Loss: 509962.5602
+Epoch [33/50], Loss: 525038.5613
+Epoch [34/50], Loss: 534985.6042
+Epoch [35/50], Loss: 547207.4491
+Epoch [36/50], Loss: 560777.9329
+Epoch [37/50], Loss: 570183.0926
+Epoch [38/50], Loss: 583495.8588
+Epoch [39/50], Loss: 593020.5139
+Epoch [40/50], Loss: 605852.1389
+Epoch [41/50], Loss: 616374.7060
+Saved plot: plots/UMM_k33_epoch41_random_init.png
+Epoch [42/50], Loss: 624903.4352
+Epoch [43/50], Loss: 634594.7755
+Epoch [44/50], Loss: 643509.7523
+Epoch [45/50], Loss: 652938.8356
+Epoch [46/50], Loss: 662677.3356
+Epoch [47/50], Loss: 669875.5787
+Epoch [48/50], Loss: 678669.8009
+Epoch [49/50], Loss: 685826.0532
+Epoch [50/50], Loss: 693297.5116
+Saved plot: plots/UMM_k33_epoch50_random_init.png
+Saved plot: plots/UMM_k33_final_random_init.png
+Test Loss for 33 components: 700591.5000
+
+============================================================
+Training UMM with 33 components (country_init)
+============================================================
+Epoch [1/50], Loss: 40353.1839
+Saved plot: plots/UMM_k33_epoch1_country_init.png
+Epoch [2/50], Loss: 44706.3556
+Epoch [3/50], Loss: 50403.5865
+Epoch [4/50], Loss: 55496.2799
+Epoch [5/50], Loss: 59797.7616
+Epoch [6/50], Loss: 66571.6726
+Epoch [7/50], Loss: 72534.9844
+Epoch [8/50], Loss: 82612.5440
+Epoch [9/50], Loss: 90255.7624
+Epoch [10/50], Loss: 98946.6172
+Epoch [11/50], Loss: 107666.5217
+Saved plot: plots/UMM_k33_epoch11_country_init.png
+Epoch [12/50], Loss: 119261.2075
+Epoch [13/50], Loss: 130520.0550
+Epoch [14/50], Loss: 142422.1872
+Epoch [15/50], Loss: 155178.8148
+Epoch [16/50], Loss: 165742.6713
+Epoch [17/50], Loss: 177286.3397
+Epoch [18/50], Loss: 190590.6950
+Epoch [19/50], Loss: 199482.3733
+Epoch [20/50], Loss: 211751.3825
+Epoch [21/50], Loss: 220873.0000
+Saved plot: plots/UMM_k33_epoch21_country_init.png
+Epoch [22/50], Loss: 232002.6620
+Epoch [23/50], Loss: 245924.4635
+Epoch [24/50], Loss: 258028.0972
+Epoch [25/50], Loss: 271838.1383
+Epoch [26/50], Loss: 286269.5185
+Epoch [27/50], Loss: 300394.7593
+Epoch [28/50], Loss: 312326.5706
+Epoch [29/50], Loss: 326718.5567
+Epoch [30/50], Loss: 341075.6736
+Epoch [31/50], Loss: 355455.3854
+Saved plot: plots/UMM_k33_epoch31_country_init.png
+Epoch [32/50], Loss: 369223.4444
+Epoch [33/50], Loss: 383425.5417
+Epoch [34/50], Loss: 396134.3576
+Epoch [35/50], Loss: 411712.8380
+Epoch [36/50], Loss: 424168.4676
+Epoch [37/50], Loss: 437003.2593
+Epoch [38/50], Loss: 450659.6157
+Epoch [39/50], Loss: 464179.0405
+Epoch [40/50], Loss: 477088.0926
+Epoch [41/50], Loss: 489215.6539
+Saved plot: plots/UMM_k33_epoch41_country_init.png
+Epoch [42/50], Loss: 501721.6875
+Epoch [43/50], Loss: 514868.4572
+Epoch [44/50], Loss: 523645.8368
+Epoch [45/50], Loss: 534618.5810
+Epoch [46/50], Loss: 545714.6852
+Epoch [47/50], Loss: 556168.1528
+Epoch [48/50], Loss: 565911.1296
+Epoch [49/50], Loss: 575236.8796
+Epoch [50/50], Loss: 585824.6944
+Saved plot: plots/UMM_k33_epoch50_country_init.png
+Saved plot: plots/UMM_k33_final_country_init.png
+Test Loss for 33 components: 592981.1250
+Saved plot: plots/UMM_log_likelihood_random_vs_country_init.png
