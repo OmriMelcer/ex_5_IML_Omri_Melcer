@@ -29,8 +29,11 @@ class CausalSelfAttention(nn.Module):
         self.block_size = block_size
         #### YOUR CODE HERE ####
         # TIP: 
+        self.input_projection = nn.Linear(self.n_embd, 3 * self.n_embd)
+        self.output_projection = nn.Linear(self.n_embd, self.n_embd)
         # It is common practive to initialze a single Linear layer to map each token to its query, key, and value, i.e. nn.Linear(self.n_embd, 3 * self.n_embd)
         # After applying the linear layer on a token embedding you can split the layer's output to key, query, and value
+
         # The output key/query/value is of dimension n_embd, in practice this includes the embeddings for all heads, 
         # therefore, embedding = [embd_1, embd_2, .. embd_nheads]. You can rearange as you please in the forward pass.
         
@@ -39,21 +42,22 @@ class CausalSelfAttention(nn.Module):
     def forward(self, x):
         #### YOUR CODE HERE ####
         # Compute queries, keys, and values. Expected shape [batch_size, n_heads, sequence_length n_embd/n_head]
-        
+        after_input_proj = self.input_projection(x) # shape [batch_size, sequence_length, 3*n_embd]
+        Q, K, V = torch.chunk(after_input_proj, 3, dim=-1)  # Each of shape [batch_size, sequence_length, n_embd]
+        Q = Q.view(Q.size(0), Q.size(1), self.n_head, self.n_embd // self.n_head).transpose(1, 2)  # shape [batch_size, n_heads, sequence_length, n_embd/n_head]
+        K = K.view(K.size(0), K.size(1), self.n_head, self.n_embd // self.n_head).transpose(1, 2)  # shape [batch_size, n_heads, sequence_length, n_embd/n_head]
+        V = V.view(V.size(0), V.size(1), self.n_head, self.n_embd // self.n_head).transpose(1, 2)  # shape [batch_size, n_heads, sequence_length, n_embd/n_head]
         # Compute normalized attention matrix (Q@K.T)/sqrt(d_k), Expected shape [batch_size, n_heads, sequence_length, sequence_length]
-        # NOTE: the dimension d_k refers to the embedding dimension of the keys which is n_embd/num_heads 
-
+        d_k = self.n_embd // self.n_head
         # Mask, this is casual self-attention, you need to mask the score of each token with the tokens that come after it in the sequence
-        # Fill all values above the diagonal with -float('inf'), this ensures these entries will be zeroed after softmax
-
-        # Apply softmax on each row of the masked normalized attention matrix and perform matrix multiplication with the values
-        # Expected shape [batch_size, n_heads, sequence_length, n_embd/n_head]
-
-        # Re-Assemble all head outputs side by side. Expected shape [batch_side, sequence_length, n_embd]
-        
-        # output projection
-        
-        return 
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(d_k)  # shape [batch_size, n_heads, sequence_length, sequence_length]
+        mask = torch.triu(torch.ones_like(scores), diagonal=1).bool()
+        scores = scores.masked_fill(mask, float('-inf'))
+        # NOTE: the dimension d_k refers to the embedding dimension of the keys which is n_embd/num_heads 
+        attention_weights = torch.softmax(scores, dim=-1)  # shape [batch_size, n_heads, sequence_length, sequence_length]
+        attention_output = torch.matmul(attention_weights, V)  # shape [batch_size, n_heads, sequence_length, n_embd/n_head]
+        attention_output = attention_output.transpose(1, 2).contiguous().view(x.size(0), x.size(1), self.n_embd)
+        return self.output_projection(attention_output)  # shape [batch_size, sequence_length, n_embd]
         
 
 class Block(nn.Module):
@@ -135,7 +139,12 @@ def train_model(
                     
     
     data_handler = DataHandler(train_path, test_path, block_size)
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    device = torch.device('cpu')
+    if (torch.cuda.is_available()):
+        device = torch.device('cuda')
+    elif torch.backends.mps.is_available():
+        device = torch.device('mps')    
     vocab_size = data_handler.get_vocab_size()
     if model is None:
         model = GPT(n_layer, n_head, n_embd, vocab_size, block_size)
@@ -165,18 +174,39 @@ def train_model(
             pin_memory=True,
             batch_size=batch_size,            
         )
-
+    test_accuracies = []
+    test_losses = []
     for ep in range(epochs):
         model.train()
         for i, batch in enumerate(tqdm(train_loader)):            
             #### YOUR CODE HERE ####
-            pass
-            
-        with torch.no_grad():
-            for i, batch in enumerate(tqdm(test_loader)):
-                pass
-                
+            inputs, targets = batch
+            inputs, targets = inputs.to(device), targets.to(device)
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss = criterion(outputs.view(-1, vocab_size), targets.view(-1))
+            loss.backward()
+            optimizer.step()
 
+        with torch.no_grad():
+            model.eval()
+            accumalated_test_loss = 0.0
+            number_of_batches = 0
+            for i, batch in enumerate(tqdm(test_loader)):
+                #calculate test accuracy
+                inputs, targets = batch
+                inputs, targets = inputs.to(device), targets.to(device)
+                outputs = model(inputs) #TODO check later if squeeze is needed
+                highest_probability_token = torch.argmax(outputs, dim=-1)
+                correct += (highest_probability_token == targets).float().mean()
+                loss = criterion (outputs.view(-1, vocab_size), targets.view(-1)) 
+                accumalated_test_loss += loss.item()
+                number_of_batches += 1
+                #print test loss
+            test_accuracy = correct / (i + 1)
+            print(f"Epoch {ep+1}/{epochs}, Test Loss: {accumalated_test_loss / number_of_batches}, Test Accuracy: {test_accuracy}")
+            test_accuracies.append(test_accuracy)
+            test_losses.append(accumalated_test_loss / number_of_batches)
             # Complete the sentence:
             sentence="the "
             for i in range(3):
@@ -184,6 +214,13 @@ def train_model(
                 for i in range(20):                            
                         tokens = torch.tensor(data_handler.encoder(sentence[-block_size:]))[None]
                         #### YOUR CODE GOES HERE ####
+                        tokens = tokens.to(device)
+                        outputs = model(tokens)
+                        next_token_logits = outputs[0, -1, :]
+                        probabilities = torch.softmax(next_token_logits, dim=-1)
+                        next_token = torch.multinomial(probabilities, num_samples=1).item()
+                        next_char = data_handler.decoder([next_token])
+                        new_sentence += next_char
                 print('new_sentence: ', new_sentence)
 
 
@@ -191,8 +228,15 @@ def train_model(
             for i in range(3):
                 for i in range(20):
                     tokens = torch.tensor(data_handler.encoder(sentence[-block_size:]))[None]
-                    #### YOUR CODE GOES HERE ####
-
+                    tokens = tokens.to(device)
+                    outputs = model(tokens)
+                    next_token_logits = outputs[0, -1, :]
+                    top_5_probabilities, _ = torch.topk(torch.softmax(next_token_logits, dim=-1), k=5)
+                    top_5_probabilities = top_5_probabilities / torch.sum(top_5_probabilities)
+                    next_token = torch.multinomial(top_5_probabilities, num_samples=1).item()
+                    next_char = data_handler.decoder([next_token])
+                    new_sentence += next_char
+        # plot the test and reaining accuracies and losses
 
 
 
