@@ -26,7 +26,7 @@ class CausalSelfAttention(nn.Module):
         super().__init__()
         self.n_head = n_head
         self.n_embd = n_embd
-        self.block_size = block_size                
+        self.block_size = block_size
         #### YOUR CODE HERE ####
         # TIP: 
         # It is common practive to initialze a single Linear layer to map each token to its query, key, and value, i.e. nn.Linear(self.n_embd, 3 * self.n_embd)
