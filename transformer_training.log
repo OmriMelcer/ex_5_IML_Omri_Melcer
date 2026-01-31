@@ -1,0 +1,196 @@
+Training GPT Model
+Parameters: block_size=10, n_layer=3, n_head=3, n_embd=48
+learning_rate=0.0003, batch_size=64, epochs=10
+================================================================================
+
+Using device: mps
+Vocabulary size: 65
+
+
+================================================================================
+Epoch 1/10
+================================================================================
+Training - Loss: 2.4694, Accuracy: 0.3160
+Testing  - Loss: 2.1517, Accuracy: 0.3720
+
+Generated sentences (regular sampling):
+  1. the froy;
+A know them an
+  2. the ut sheal cile a hote
+  3. the to uns mors.
+QVONRBU
+
+Generated sentences (top-k sampling, k=5):
+  1. the thous there my hirne
+  2. the site say and shatter
+  3. the have seendedse,
+This
+
+================================================================================
+Epoch 2/10
+================================================================================
+Training - Loss: 2.0654, Accuracy: 0.3946
+Testing  - Loss: 2.0370, Accuracy: 0.3955
+
+Generated sentences (regular sampling):
+  1. the younour in in thou h
+  2. the exlapues his your fr
+  3. the my tail Nontry xand.
+
+Generated sentences (top-k sampling, k=5):
+  1. the too shery that sentr
+  2. the seland, anot ast my 
+  3. the his anot this a thou
+
+================================================================================
+Epoch 3/10
+================================================================================
+Training - Loss: 1.9593, Accuracy: 0.4205
+Testing  - Loss: 1.9582, Accuracy: 0.4209
+
+Generated sentences (regular sampling):
+  1. the dienger.
+
+JUMOLINI:
+
+  2. the pine likes staide th
+  3. the dade were tesels far
+
+Generated sentences (top-k sampling, k=5):
+  1. the tronger and sing to 
+  2. the here my fore man sha
+  3. the handess my are still
+
+================================================================================
+Epoch 4/10
+================================================================================
+Training - Loss: 1.9002, Accuracy: 0.4358
+Testing  - Loss: 1.9208, Accuracy: 0.4260
+
+Generated sentences (regular sampling):
+  1. the ment, the a sill
+Tha
+  2. the eade.
+
+GLOUCESMEONTI
+  3. the rokar, did pa dect s
+
+Generated sentences (top-k sampling, k=5):
+  1. the broubly have her cau
+  2. the think'd by let think
+  3. the him, be the place. W
+
+================================================================================
+Epoch 5/10
+================================================================================
+Training - Loss: 1.8540, Accuracy: 0.4469
+Testing  - Loss: 1.9014, Accuracy: 0.4331
+
+Generated sentences (regular sampling):
+  1. the catieve on most rest
+  2. the to so,
+As dot lovins
+  3. the comes hand she heave
+
+Generated sentences (top-k sampling, k=5):
+  1. the sprok of answard the
+  2. the stroke any the sten 
+  3. the as to that so the he
+
+================================================================================
+Epoch 6/10
+================================================================================
+Training - Loss: 1.8220, Accuracy: 0.4546
+Testing  - Loss: 1.8757, Accuracy: 0.4386
+
+Generated sentences (regular sampling):
+  1. the treak dayFor the me 
+  2. the breast thou will you
+  3. the his him.
+
+What, show
+
+Generated sentences (top-k sampling, k=5):
+  1. the shall of heirt we as
+  2. the stais will stom that
+  3. the are so such him holy
+
+================================================================================
+Epoch 7/10
+================================================================================
+Training - Loss: 1.7953, Accuracy: 0.4625
+Testing  - Loss: 1.8597, Accuracy: 0.4428
+
+Generated sentences (regular sampling):
+  1. the life so be curld.
+On
+  2. the the blot not
+unded,
+
+  3. the raison, Jurse give a
+
+Generated sentences (top-k sampling, k=5):
+  1. the sonswear too may to 
+  2. the the desent, be she w
+  3. the that should some an 
+
+================================================================================
+Epoch 8/10
+================================================================================
+Training - Loss: 1.7785, Accuracy: 0.4660
+Testing  - Loss: 1.8364, Accuracy: 0.4499
+
+Generated sentences (regular sampling):
+  1. the anjed's lish we rest
+  2. the to thou have swear t
+  3. the head;
+I'd cornot the
+
+Generated sentences (top-k sampling, k=5):
+  1. the hath he cuty shat ha
+  2. the should to the she cr
+  3. the head, this fame, as 
+
+================================================================================
+Epoch 9/10
+================================================================================
+Training - Loss: 1.7643, Accuracy: 0.4692
+Testing  - Loss: 1.8111, Accuracy: 0.4591
+
+Generated sentences (regular sampling):
+  1. the coses and by shouldr
+  2. the people, and the fore
+  3. the cumper.
+
+BUCKINGPELI
+
+Generated sentences (top-k sampling, k=5):
+  1. the son, and brothis sav
+  2. the have a morn's the ca
+  3. the willong him trother 
+
+================================================================================
+Epoch 10/10
+================================================================================
+Training - Loss: 1.7500, Accuracy: 0.4721
+Testing  - Loss: 1.8232, Accuracy: 0.4520
+
+Generated sentences (regular sampling):
+  1. the desposmourst-O,
+And 
+  2. the cition calls torst t
+  3. the loves a
+his fancment
+
+Generated sentences (top-k sampling, k=5):
+  1. the true that thouse the
+  2. the hundstates it we thi
+  3. the so the touclesed,
+Th
+
+================================================================================
+Saving model to gpt_model.pt
+Model saved successfully!
+Training curves saved to plots/transformer_training_curves.png
+
+Training completed!
